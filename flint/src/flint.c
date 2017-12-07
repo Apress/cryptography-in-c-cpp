@@ -112,7 +112,7 @@ static int
 allocate_reg_l (void);
 /* Integer square roots from ULONG values */
 static ULONG
-ul_iroot (unsigned long n);
+ul_iroot (unsigned int n);
 /*  Test and set bit w/o checking for overrun */
 static int 
 setbit (CLINT a_l, unsigned int pos);
@@ -1130,11 +1130,11 @@ shl_l (CLINT a_l)
 /*                                                                            */
 /******************************************************************************/
 int __FLINT_API
-shift_l (CLINT n_l, long int noofbits)
+shift_l (CLINT n_l, int noofbits)
 {
   USHORT shorts = (USHORT)((ULONG)(noofbits < 0 ? -noofbits : noofbits) / BITPERDGT);
   USHORT bits = (USHORT)((ULONG)(noofbits < 0 ? -noofbits : noofbits) % BITPERDGT);
-  long int resl;
+  int resl;
   USHORT i;
   int error = E_CLINT_OK;
 
@@ -1155,7 +1155,7 @@ shift_l (CLINT n_l, long int noofbits)
       return E_CLINT_OK;
     }
 
-  if ((resl < 0) || (resl > (long)CLINTMAXBIT))
+  if ((resl < 0) || (resl > (int)CLINTMAXBIT))
     {
       error = ((resl < 0) ? E_CLINT_UFL : E_CLINT_OFL);   /* Under-/Overflow */
     }
@@ -3884,7 +3884,7 @@ gcd_l (CLINT aa_l, CLINT bb_l, CLINT cc_l)
       if (EQZ_L (t_l))
         {                                    /* finished */
           cpy_l (cc_l, a_l);                 /* cc_l <- a */
-          shift_l (cc_l, (long int)k);       /* cc_l <- cc_l*2**k */
+          shift_l (cc_l, (int)k);       /* cc_l <- cc_l*2**k */
 
           PURGEVARS_L ((3, sizeof (a_l), a_l,
                            sizeof (b_l), b_l,
@@ -4637,7 +4637,7 @@ int __FLINT_API
 jacobi_l (CLINT aa_l, CLINT bb_l)
 {
   CLINT a_l, b_l, tmp_l;
-  long int k, v;
+  int k, v;
 
   /* Step 1 */
   if (EQZ_L (bb_l))
@@ -6771,7 +6771,7 @@ static void purgevars_l (int noofvars, ...)
                    break;
           case 2:  *va_arg (ap, short *) = 0;
                    break;
-          case 4:  *va_arg (ap, long *) = 0;
+          case 4:  *va_arg (ap, int *) = 0;
                    break;
           default: Assert (size >= CLINTMAXBYTE);
                    memset (va_arg(ap, char *), 0, size);

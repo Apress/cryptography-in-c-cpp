@@ -72,8 +72,8 @@ extern "C" {
 
 
 struct ripemd_stat {
-    unsigned long stomach[5];
-    unsigned long total[2];
+    unsigned int stomach[5];
+    unsigned int total[2];
 };
 
 typedef struct ripemd_stat RMDSTAT;
@@ -117,21 +117,21 @@ typedef struct ripemd_stat RMDSTAT;
 extern void __FLINT_API  
 ripeinit_l (RMDSTAT *);
 extern int  __FLINT_API  
-ripehash_l (RMDSTAT *, unsigned char *, unsigned long);
+ripehash_l (RMDSTAT *, unsigned char *, unsigned int);
 extern void __FLINT_API  
-ripefinish_l (unsigned char *, RMDSTAT *, unsigned char *, unsigned long);
+ripefinish_l (unsigned char *, RMDSTAT *, unsigned char *, unsigned int);
 extern void __FLINT_API 
-ripemd160_l (unsigned char *, unsigned char *, unsigned long);
+ripemd160_l (unsigned char *, unsigned char *, unsigned int);
 
 /* RIPEMD-128 */
 extern void __FLINT_API  
 ripeinit128_l (RMDSTAT *);
 extern int  __FLINT_API  
-ripehash128_l (RMDSTAT *, unsigned char *, unsigned long);
+ripehash128_l (RMDSTAT *, unsigned char *, unsigned int);
 extern void __FLINT_API  
-ripefinish128_l (unsigned char *, RMDSTAT *, unsigned char *, unsigned long);
+ripefinish128_l (unsigned char *, RMDSTAT *, unsigned char *, unsigned int);
 extern void __FLINT_API 
-ripemd128_l (unsigned char *, unsigned char *, unsigned long);
+ripemd128_l (unsigned char *, unsigned char *, unsigned int);
 
 #ifdef  __cplusplus
 }
