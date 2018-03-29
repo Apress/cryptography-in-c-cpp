@@ -98,30 +98,35 @@ int main(int argc, char **argv)
 	LINT message(msgstring, 16);
 	printf("Testing with message %s\n", message.hexstr());
 
-	// sign with the public key components e and n
-	LINT cipher = mexpkm(message, e, n);
+	// sign with the private key d, n
+	LINT msgsigned = mexpkm(message, d, n);
 
-	printf("Signed message %s\n", cipher.hexstr());
+	printf("Signed message %s\n", msgsigned.hexstr());
 
-	// do a standard verification with d and n
-	LINT decrypted = mexpkm(cipher, d, n);
+	// verify with public key e, n
+	LINT msgverified = mexpkm(msgsigned, e, n);
 
-	printf("Recovered message with d and n %s\n", decrypted.hexstr());
+	printf("Recovered message with d and n %s\n", msgverified.hexstr());
 
-	if(message != decrypted) 
+	if(message != msgverified) 
 		printf("Private key failed!\n");
 	else
 		printf("Private key worked.\n");
 
-	// do a CRT verification using p, q, dP, dQ, qInv
-	LINT m1 = mexpkm(cipher, dP, p);
-	LINT m2 = mexpkm(cipher, dQ, q);
+	// do a CRT signing using p, q, dP, dQ, qInv
+	LINT m1 = mexpkm(message, dP, p);
+	LINT m2 = mexpkm(message, dQ, q);
 	LINT h = qInv.mmul(p + m1 - m2, p);	// add an extra p to prevent a negative message value
-	LINT decrypted2 = m2 + h * q;
+	LINT msgsigned2 = m2 + h * q;
 
-	printf("Recovered message with CRT components %s\n", decrypted2.hexstr());
+	printf("Signed message with CRT components %s\n", msgsigned2.hexstr());
 
-	if(message != decrypted2) 
+	// verify with public key e, n
+	LINT msgverified2 = mexpkm(msgsigned2, e, n);
+
+	printf("Recovered message with d and n %s\n", msgverified2.hexstr());
+
+	if(message != msgverified2) 
 		printf("CRT failed!\n");
 	else
 		printf("CRT worked.\n");
