@@ -32,7 +32,7 @@ public:
 int main(int argc, char **argv)
 {
 	// length of primes; half the RSA key length
-	unsigned short bits = 2048; // no greater than 4097 due to flint max hex digits set at 512
+	unsigned short bits = 3584; // no greater than 4097 due to flint max hex digits set at 512
 	// pick a small odd prime as the public exponent e
 	// ICC cards typically use 3, 65537 (2^16 + 1) is also common
 	unsigned short e = 3;
@@ -67,10 +67,14 @@ int main(int argc, char **argv)
 	{
 		p = FindPrime(bits, prngState);
 		printf("p 0x%s\n\n", p.hexstr());
-
-		p_1_mod_e = mod(p - 1, e);
-
 		tk.Print();
+
+		printf("Checking for factorability...\n");
+		p_1_mod_e = mod(p - 1, e);
+		tk.Print();
+
+		if(p_1_mod_e == zero)
+			printf("p - 1 is factorable by e, trying again.\n");
 	}while(p_1_mod_e == zero);
 
 	LINT q_1_mod_e;
@@ -78,19 +82,24 @@ int main(int argc, char **argv)
 	{
 		q = FindPrime(bits, prngState);
 		printf("q 0x%s\n\n", q.hexstr());
-
-		q_1_mod_e = mod(q - 1, e);
-
 		tk.Print();
+
+		printf("Checking for factorability...\n");
+		q_1_mod_e = mod(q - 1, e);
+		tk.Print();
+
+		if(q_1_mod_e == zero)
+			printf("q - 1 is factorable by e, trying again.\n");
 	}while(q_1_mod_e == zero);
 
 	// calculate modulus, n = p * q
 	n = mul(p, q);
 	printf("n 0x%s\n\n", n.hexstr());
+	tk.Print();
 
 	// calculate totient t = (p - 1)(q - 1)
 	t = mul(sub(p, one), sub(q, one));
-
+	printf("Calculated totient (p - 1)(q - 1)\n");
 	tk.Print();
 
 	// flint function to calculate modular inverse
@@ -115,7 +124,6 @@ int main(int argc, char **argv)
 	}
 	printf("Found private exponent after %i iterations\n\n", count);
 	printf("d 0x%s\n\n", d.hexstr());
-
 	tk.Print();
 
 	// Test message.  The message is treated as a large number, so it needs to be encoded 
@@ -139,12 +147,10 @@ int main(int argc, char **argv)
 		LINT message(text, 16);
 		LINT cipher = mexp(message, e, n);
 		printf("Ciphered (message ^ e mod n) 0x%s\n\n", cipher.hexstr());
-	
 		tk.Print();
 	
 		message = mexpkm(cipher, d, n);
 		printf("Deciphered (cipher ^ d mod n) 0x%s\n\n", message.hexstr());
-		
 		tk.Print();
 
 	// do the same operation using the CRT
@@ -191,6 +197,7 @@ int main(int argc, char **argv)
 			message = m2 + h * q;
 
 			printf("Deciphered using CRT 0x%s\n\n", message.hexstr());
+			tk.Print();
 		}
 		else
 		{
