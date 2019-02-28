@@ -199,6 +199,15 @@ int main(int argc, char **argv)
     m = m2 + h*q
 
 	We store our private key as the quintuple (p, q, dP, dQ, qInv).
+	
+	As to why the extra p to keep things positive, see Applied Crytography, Bruche Schneier, section 11.3 pg 242-243:
+	
+	"This definition of mod may be different from the definition used in some pro- gramming languages.  For example, 
+	PASCAL's modulo operator sometimes returns a negative number.  It returns a number between -(n - 1) and n - 1. 
+	In C, the % oper- ator returns the remainder from the division of the first expression by the second; this can be 
+	a negative number if either operand is  negative.  For all the algorithms in this book, make sure you add n to the 
+	result of the modulo operator if  it  returns a negative number."
+
 	*/ 
 
 		if(p > q)
