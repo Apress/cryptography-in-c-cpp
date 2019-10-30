@@ -5062,10 +5062,15 @@ str2clint_l (CLINT n_l, char *str, USHORT base)
 
   SETZERO_L (n_l);
 
+  /* This had a bug where a hex string starting with "0[Bb] would have the 
+   * first byte skipped over, since it looked like it was a binary string 
+   * prefix.  We must ignore that for a base of > 10, since 0b is a valid 
+   * number in larger bases.
+   */
   if (*str == '0')
     {
-      if ((tolower_l(*(str+1)) == 'x') ||
-          (tolower_l(*(str+1)) == 'b'))      /* Ignore prefixes */
+      if ((tolower_l(*(str+1)) == 'x') ||      /* Ignore prefixes */
+          (base < 12 && (tolower_l(*(str+1)) == 'b')))
         {
           ++str;
           ++str;

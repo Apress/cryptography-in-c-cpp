@@ -32,7 +32,7 @@ public:
 int main(int argc, char **argv)
 {
 	// length of primes; half the RSA key length
-	unsigned short bits = 3584; // no greater than 4097 due to flint max hex digits set at 512
+	unsigned short bits = 704; // no greater than 4097 due to flint max hex digits set at 512
 	// pick a small odd prime as the public exponent e
 	// ICC cards typically use 3, 65537 (2^16 + 1) is also common
 	unsigned short e = 3;
