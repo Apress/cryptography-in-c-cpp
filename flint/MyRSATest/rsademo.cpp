@@ -32,10 +32,24 @@ public:
 int main(int argc, char **argv)
 {
 	// length of primes; half the RSA key length
-	unsigned short bits = 704; // no greater than 4097 due to flint max hex digits set at 512
+	unsigned short bits = 1024; // no greater than 4097 due to flint max hex digits set at 512
 	// pick a small odd prime as the public exponent e
 	// ICC cards typically use 3, 65537 (2^16 + 1) is also common
 	unsigned short e = 3;
+
+	if(argc == 2) bits = atoi(argv[1]);
+	
+	printf("Calculating %i bit primes\n", bits);
+	if(bits <= 16) 
+	{
+		printf("Bit length too small, must be greater than 16.\n");
+		exit(0);
+	}
+	if(bits > 4096)
+	{
+		printf("Bit length too great, must be 4096 or less.\n");
+		exit(0);
+	}
 
 	// LINT are created with the value and the base as arguments; we'll need 1 and 0 later
 	LINT one("1", 16);
@@ -92,6 +106,14 @@ int main(int argc, char **argv)
 			printf("q - 1 is factorable by e, trying again.\n");
 	}while(q_1_mod_e == zero);
 
+	// CRT is iffy with q>p, so swap them if that's the case
+	if(q > p)
+	{
+		LINT tmp = p;
+		p = q;
+		q = tmp;
+	}
+	
 	// calculate modulus, n = p * q
 	n = mul(p, q);
 	printf("n 0x%s\n\n", n.hexstr());
@@ -177,6 +199,15 @@ int main(int argc, char **argv)
     m = m2 + h*q
 
 	We store our private key as the quintuple (p, q, dP, dQ, qInv).
+	
+	As to why the extra p to keep things positive, see Applied Crytography, Bruche Schneier, section 11.3 pg 242-243:
+	
+	"This definition of mod may be different from the definition used in some programming languages.  For example, 
+	PASCAL's modulo operator sometimes returns a negative number.  It returns a number between -(n - 1) and n - 1. 
+	In C, the % operator returns the remainder from the division of the first expression by the second; this can be 
+	a negative number if either operand is  negative.  For all the algorithms in this book, make sure you add n to 
+	the result of the modulo operator if  it  returns a negative number."
+
 	*/ 
 
 		if(p > q)

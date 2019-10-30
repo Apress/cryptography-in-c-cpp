@@ -106,7 +106,7 @@ extern "C" {
 /* Number of digits of CLINT-ojects to base 0x10000    */
 
 /*#define CLINTMAXDIGIT   256U */
-#define CLINTMAXDIGIT   512U
+#define CLINTMAXDIGIT   1024U
 /*******************************************************/
 
 #define CLINTMAXSHORT   (CLINTMAXDIGIT + 1)
