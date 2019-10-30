@@ -100,10 +100,10 @@ static inline void ZeroUcharArray (void *, size_t);
 /* Thus conversion macro UC2ULBE takes value of lowest memory address */
 /* of each 4-byte-group as most significant digit of an ULONG word. */
 #define UC2ULBE(ucptr) \
-  (((unsigned long) *((ucptr)+3)      ) | \
-   ((unsigned long) *((ucptr)+2) <<  8) | \
-   ((unsigned long) *((ucptr)+1) << 16) | \
-   ((unsigned long) *(ucptr)     << 24))
+  (((unsigned int) *((ucptr)+3)      ) | \
+   ((unsigned int) *((ucptr)+2) <<  8) | \
+   ((unsigned int) *((ucptr)+1) << 16) | \
+   ((unsigned int) *(ucptr)     << 24))
 
 
 /* Addition of a single-digit number b to a double-digit number represented */

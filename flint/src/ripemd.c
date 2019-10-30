@@ -97,13 +97,13 @@ static inline void ZeroUcharArray (void *, size_t);
 
 /* Conversion of an array of type UCHAR into a value of type ULONG */
 #if defined LITTLE_ENDIAN
-#define UC2UL(ucptr)  *(unsigned long *)((ucptr))
+#define UC2UL(ucptr)  *(unsigned int *)((ucptr))
 #else
 #define UC2UL(ucptr) \
-          (((unsigned long) *((ucptr)+3) << 24) | \
-           ((unsigned long) *((ucptr)+2) << 16) | \
-           ((unsigned long) *((ucptr)+1) <<  8) | \
-           ((unsigned long) *(ucptr)))
+          (((unsigned int) *((ucptr)+3) << 24) | \
+           ((unsigned int) *((ucptr)+2) << 16) | \
+           ((unsigned int) *((ucptr)+1) <<  8) | \
+           ((unsigned int) *(ucptr)))
 #endif
 
 

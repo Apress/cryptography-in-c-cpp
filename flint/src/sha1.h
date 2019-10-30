@@ -70,8 +70,8 @@ extern "C" {
 
 struct sha1_stat 
 {
-  unsigned long stomach[5];
-  unsigned long total[2];
+  unsigned int stomach[5];
+  unsigned int total[2];
 };
 
 typedef struct sha1_stat SHASTAT;
@@ -114,11 +114,11 @@ typedef struct sha1_stat SHASTAT;
 extern void __FLINT_API  
 sha1init_l (SHASTAT *);
 extern int  __FLINT_API  
-sha1hash_l (SHASTAT *, unsigned char *, unsigned long);
+sha1hash_l (SHASTAT *, unsigned char *, unsigned int);
 extern void __FLINT_API  
-sha1finish_l (unsigned char *, SHASTAT *, unsigned char *, unsigned long);
+sha1finish_l (unsigned char *, SHASTAT *, unsigned char *, unsigned int);
 extern void __FLINT_API 
-sha1_l (unsigned char *, unsigned char *, unsigned long);
+sha1_l (unsigned char *, unsigned char *, unsigned int);
 
 #ifdef  __cplusplus
 }
