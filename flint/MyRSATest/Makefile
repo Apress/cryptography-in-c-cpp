@@ -1,7 +1,7 @@
 CFLAGS = -v -c -O2 -Wall -ansi -I../src -o $@
 
 STDCPP=stdc++
-EXECUTABLE = -O2 -o rsademo -lm
+EXECUTABLE = -O2 -o rsademo -lm -std=c++11 -fpermissive
 
 rsademo: rsademo.o flintpp.o flint.o random.o entropy.o aes.o ripemd.o sha1.o randompp.o
 	gcc $(EXECUTABLE) rsademo.o random.o entropy.o aes.o ripemd.o sha1.o randompp.o flintpp.o flint.o -l$(STDCPP)

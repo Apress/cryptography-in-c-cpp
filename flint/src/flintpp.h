@@ -322,7 +322,7 @@ class LINT
 
   // Number theoretic friend functions
 
-  friend int isprime (const LINT&, int noofsmallprimes = 302, int iterations = 0);
+  friend int isprime (const LINT&, int, int);
   friend LINT issqr (const LINT&);
   friend unsigned int ld (const LINT&);
   friend LINT gcd (const LINT&, const LINT&);
@@ -375,7 +375,7 @@ class LINT
 
   // Conversion
 
-  friend char* lint2str (const LINT&, USHORT, int = 0);
+  friend char* lint2str (const LINT&, USHORT, int);
   friend UCHAR* lint2byte (const LINT&, int*);
 
   // Export as CLINT type
