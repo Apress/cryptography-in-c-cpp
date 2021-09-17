@@ -105,7 +105,8 @@ extern "C" {
 /*******************************************************/
 /* Number of digits of CLINT-ojects to base 0x10000    */
 
-#define CLINTMAXDIGIT   256U
+/*#define CLINTMAXDIGIT   256U */
+#define CLINTMAXDIGIT   1024U
 /*******************************************************/
 
 #define CLINTMAXSHORT   (CLINTMAXDIGIT + 1)
@@ -413,17 +414,17 @@ extern "C" {
 /* Initialization of pseudorandom number generators */
 /* with values derived from time                    */
 #define INITRAND_LT()\
-        ulseed64_l ((unsigned long)time(NULL))
+        ulseed64_l ((unsigned int)time(NULL))
 
 #define initrand_lt()\
-        ulseed64_l ((unsigned long)time(NULL))
+        ulseed64_l ((unsigned int)time(NULL))
 
 
 #define INITRAND64_LT()\
-        ulseed64_l ((unsigned long)time(NULL))
+        ulseed64_l ((unsigned int)time(NULL))
 
 #define initrand64_lt()\
-        ulseed64_l ((unsigned long)time(NULL))
+        ulseed64_l ((unsigned int)time(NULL))
 
 
 /* Compatibility with version 1.0 : Macro clint2str_l */
@@ -501,7 +502,7 @@ extern "C" {
 /***********************************************************/
 
 typedef unsigned short clint;
-typedef unsigned long clintd;
+typedef unsigned int clintd;
 typedef clint CLINT[CLINTMAXSHORT];
 typedef clint CLINTD[1 + (CLINTMAXDIGIT << 1)];
 typedef clint CLINTQ[1 + (CLINTMAXDIGIT << 2)];
@@ -513,7 +514,7 @@ typedef unsigned char  UCHAR;
 typedef unsigned short USHORT;
 #endif  /* USHORT */
 #ifndef ULONG
-typedef unsigned long  ULONG;
+typedef unsigned int  ULONG;
 #endif  /* ULONG */
 
 
@@ -622,7 +623,7 @@ extern clint *  __FLINT_API  seed64_l      (CLINT);
 extern void     __FLINT_API  set_noofregs_l(unsigned int);
 extern int      __FLINT_API  setbit_l      (CLINT, unsigned int);
 extern clint *  __FLINT_API  setmax_l      (CLINT);
-extern int      __FLINT_API  shift_l       (CLINT, long int);
+extern int      __FLINT_API  shift_l       (CLINT, int);
 extern int      __FLINT_API  shl_l         (CLINT);
 extern int      __FLINT_API  shr_l         (CLINT);
 extern USHORT   __FLINT_API  sieve_l       (CLINT, unsigned int);
